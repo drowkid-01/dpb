@@ -39,7 +39,7 @@ selection_fun() {
     echo $selection
 }
 
-tittle() 
+tittle(){ 
     [[ -z $1 ]] && rt='adm-lite' || rt='ADMcgh'
     clear && clear
     msg -bar
