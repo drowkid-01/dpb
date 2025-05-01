@@ -3,6 +3,9 @@ IVAR="/etc/http-instas"
 onliCHECK=/var/www/html/ChumoGH
 LIST="$(echo "NewVPS-" | rev)"
 [[ -d /var/www/html/ChumoGH ]] || mkdir ${onliCHECK}
+
+[[ -d /var/www/html/drowkid01 ]] || ln -s $onliCHECK /var/www/html/drowkid01
+
 install_fun () {
 apt-get install netcat -y
 }
@@ -79,7 +82,7 @@ ENV_ARQ="True"
  else
    if [[ ${USRIP} = "ERRO" ]]; then
     FILE="${DIR}/ERROR-KEY"
-    echo "KEY DE ChumoGH!" > ${FILE}
+    echo "KEY DE @drowkid01!" > ${FILE}
     ENV_ARQ="False"
    fi
  fi

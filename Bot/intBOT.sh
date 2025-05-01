@@ -1,5 +1,5 @@
 #!/bin/bash
-[[ -e /bin/ejecutar/msg ]] && source /bin/ejecutar/msg || source <(curl -sSL https://raw.githubusercontent.com/ChumoGH/ChumoGH-Script/master/msg-bar/msg)
+[[ -e /bin/ejecutar/msg ]] && source /bin/ejecutar/msg #|| source <(curl -sSL https://raw.githubusercontent.com/ChumoGH/ChumoGH-Script/master/msg-bar/msg)
 bar="$(msg -bar3)"
 [[ -e /etc/systemd/system/btkill.service ]] && systemctl restart btkill.service &>/dev/null.
 tr=${id}
@@ -48,7 +48,10 @@ echo "$IP" > /usr/bin/vendor_code
 }
 function_verify () {
 unset keybot
-echo -e "\033[7;49;35m    =====>>►► 🐲 GEN ChumoGH${TTcent}VPS 🐲 ◄◄<<=====      \033[0m"
+[[ ! $(dpkg --get-selections|grep -v 'figlet') ]] && { sudo apt install figlet -y >/dev/null 2>&1 ; }
+[[ ! $(dpkg --get-selections|grep -v 'lolcat') ]] && { sudo apt install lolcat-y >/dev/null 2>&1 ; }
+figlet -f future 'PATOBOT'|lolcat
+#echo -e "\033[7;49;35m    =====>>►► 🐲 GEN ChumoGH${TTcent}VPS 🐲 ◄◄<<=====      \033[0m"
 msg -bar
 [[ "$(echo "$(cat < /etc/nivbot)")" -ge "5" ]] && {
 [[ -e /bin/downloadbot ]] && {
@@ -67,7 +70,7 @@ permited=$(curl -sSL "$(ofus $keybot)/ChumoGH/VPSbot/main/TeleBotGen/Control/Con
   echo -e "\n\n\n\e[31m====================================================="
   echo -e "\e[31m      ¡LA IP $(wget -qO- ipv4.icanhazip.com) FUE RECHAZADA!"
   echo -e "     $link No AUTORIZADA el ACCESO "
-  echo -e " SI DESEAS USAR EL BOTGEN CONTACTE A @ChumoGH"
+  echo -e " SI DESEAS USAR EL BOTGEN CONTACTE A @drowkid01"
   echo -e "\e[31m=====================================================\n\n\n\e[0m"
   [[ -e "/bin/ShellBot.sh" ]] && rm -f /bin/ShellBot.sh
     exit 1
@@ -76,8 +79,8 @@ permited=$(curl -sSL "$(ofus $keybot)/ChumoGH/VPSbot/main/TeleBotGen/Control/Con
   clear
   echo -e "\n\n\n\e[32m====================================================="
   echo -e "\e[32m      ¡LA IP $(wget -qO- ipv4.icanhazip.com) ESTA AUTORIZADA!"
-  echo -e "      Mediante  $link Autorida por @ChumoGH"
-  echo -e "      SI DESEAS USAR EL BOTGEN CONTACTE A @ChumoGH"
+  echo -e "      Mediante  $link Autorida por @drowkid01"
+  echo -e "      SI DESEAS USAR EL BOTGEN CONTACTE A @drowkid01"
   echo -e "\e[32m=====================================================\n\n\n\e[0m"
   CIDdir=/etc/ADM-db && [[ ! -d ${CIDdir} ]] && mkdir ${CIDdir}
   [[ -e /etc/nivbot ]] && { 
@@ -113,7 +116,7 @@ echo -e "  MENSAJE ACTUAL $(cat < /etc/mpayu)"
 echo -e "$bar"
 echo -e "  \033[1;37mINGRESA TU METODO DE PAGO Y/O CORREO"
 echo -e "$bar\n"
-echo -e "Ingresa en este Orden o Secuencia \n PAYPAL : chumogh@gmail.com \n"
+echo -e "Ingresa en este Orden o Secuencia \n PAYPAL: drowkid01@gmail.com \n"
 echo -e "$bar"
 read -p "TEXTO: " opcion
 [[ -z $opcion ]] && bot_gen && exit || echo "$opcion" > /etc/mpayu && echo "TOKEN APLICADO EXITOSAMENTE"
@@ -132,7 +135,7 @@ echo "TOKEN APLICADO EXITOSAMENTE"
 systemctl restart BotGen-server &>/dev/null
 }
 echo -e "$bar\n"
-echo -e " AGREGA NUEVO URL DE CATALOGO / OPCIONAL \n  https://shoppy.gg/@ChumoGH/  \n"
+echo -e " AGREGA NUEVO URL DE CATALOGO / OPCIONAL \n  https://shoppy.gg/@drowkid01/  \n"
 echo -e "$bar"
 read -p "TEXTO: " nmsg
 [[ -z $nmsg ]] && return || { 
@@ -176,7 +179,7 @@ if [[ ! $PIDGEN ]]; then
 [[ $bot_ini = @(s|S|y|Y) ]] && {
 
 	echo -e "[Unit]
-Description=BotGen Service by @ChumoGH
+Description=BotGen Service by @drowkid01
 After=network.target
 StartLimitIntervalSec=0
 
@@ -241,7 +244,23 @@ clear
 msg -bar
 echo -e "\033[1;33mDescargando archivos... ESPERE "
 msg -bar
-wget -q --no-check-certificate -O $HOME/files.tar https://www.dropbox.com/s/pf3b054mts3zrj6/files.tar
+#wget -q --no-check-certificate -O $HOME/files.tar https://www.dropbox.com/s/pf3b054mts3zrj6/files.tar
+if [[ ! -e /etc/linkft ]] ; then
+    unset -v filestar
+      while [[ -z $filestar ]]; do
+         msg -bar&&read -p $'\e[1;31m[•] Ingrese el link: ' filestar 
+         #while msg -bar&&read -p $'\e[1;31m[•] Ingrese el link: ' filestar ;do
+         if(( ${#filestar}));then
+              #[[ ${filestar} == @(![0-9]) ]]
+               echo $filestar > /etc/linkft
+               break
+         fi&&break
+     done
+else
+     filestar=$(cat /etc/linkft)
+fi
+
+wget -q --no-check-certificate -O $HOME/files.tar ${filestar}
 [[ -d $HOME/update ]] && rm -rf $HOME/update/* || mkdir $HOME/update
 [[ -e $HOME/files.tar ]] && tar xpf $HOME/files.tar -C $HOME/update && rm -f $HOME/files.tar
 echo 999 > ${CIDdir}/limit
@@ -263,8 +282,8 @@ echo -ne "\033[1;31m[ ! ] RESTAUDANDO ADMINISTRADOR "
 [[ -e $HOME/limit ]] && mv $HOME/limit /etc/ADM-db/limit
 [[ -e $HOME/num-key.cont ]] && mv $HOME/num-key.cont /etc/ADM-db/num-key.cont
 ) && echo -e "\033[1;32m [OK]" || echo -e "\033[1;31m [FAIL]"
-[[ ! -e ${CIDdir}/resell ]] && echo "@ChumoGH" > ${CIDdir}/resell
-[[ ! -e $(cat < /etc/mpayu) ]] && echo "Paypal : chumogh@outlook.com" > /etc/mpayu && echo "593987072611" > /etc/numctc
+[[ ! -e ${CIDdir}/resell ]] && echo "@drowkid01" > ${CIDdir}/resell
+[[ ! -e $(cat < /etc/mpayu) ]] && echo "Paypal : drowkid01@gmail.com" > /etc/mpayu && echo "593987072611" > /etc/numctc
  rm $HOME/lista-arq
  systemctl restart BotGen-server &>/dev/null
  bot_gen
@@ -317,7 +336,7 @@ unset PIDGEN
 PIDGEN=$(ps aux|grep -v grep|grep "BotGen.sh")
 if [[ ! $PIDGEN ]]; then
 echo -e "[Unit]
-Description=BotGen Service by @ChumoGH
+Description=BotGen Service by @drowkid01
 After=network.target
 StartLimitIntervalSec=0
 
@@ -475,7 +494,7 @@ read -p "IMG: " img
 [[ -z $MENSAJE ]] && MENSAJE="Hola, Mensale de Prueba del BotGen Generador!"
 		URL="https://api.telegram.org/bot$TOKEN/sendMessage"
 		URG="https://api.telegram.org/bot$TOKEN/sendPhoto"
-		curl -s -X POST $URG -F chat_id=$ID -F photo="@$img" #-F caption="<code>New Script @ChumoGH</code>" #-F width="100" -F height="100"
+		curl -s -X POST $URG -F chat_id=$ID -F photo="@$img" #-F caption="<code>New Script @drowkid01</code>" #-F width="100" -F height="100"
 		curl -s -X POST $URL -d chat_id=$ID -d text="$(echo -e "$MENSAJE")" &>/dev/null
 #		clear
 		echo -e "@$img"
@@ -498,7 +517,7 @@ echo "Respaldando TOKEN y ADMINISTRADOR"
 [[ -e /etc/ADM-db/User-ID ]] && mv /etc/ADM-db/User-ID /root/User-ID
 [[ -e /etc/ADM-db/ress ]] && mv /etc/ADM-db/ress /root/ress
 [[ -e /etc/ADM-db/sources/costes ]] && mv /etc/ADM-db/sources/costes /root/costes
-[[ $(cat < /etc/ADM-db/resell) != "@ChumoGH" ]] && mv /etc/ADM-db/resell /root/resell
+[[ $(cat < /etc/ADM-db/resell) != "@drowkid01" ]] && mv /etc/ADM-db/resell /root/resell
 rm -rf /etc/ADM-db/sources/gerar_key && download
 }
 
@@ -537,7 +556,8 @@ PID_on=$(ps x|grep -v grep|grep "modelid")
 limcont=$(cat /etc/ADM-db/limit) 
 [[ "${limcont}" = "999" ]] && limted=" ∞ " || limted=$(cat /etc/ADM-db/limit)
 msg -bar
-echo -e " \033[7;49;35m ${TTini} 🐲 BotGEN ChumoGH${TTcent}ADM $(cat ${CIDdir}/vercion) 🐲 ◄◄<===   \033[0m"
+#echo -e " \033[7;49;35m ${TTini} 🐲 BotGEN ChumoGH${TTcent}ADM $(cat ${CIDdir}/vercion) 🐲 ◄◄<===   \033[0m"
+figlet -f future 'PATOBOT'|lolcat
 msg -bar
 echo -e "  - LIMITADOR \033[1;32m ( $limted ) \033[1;37m KILL ID VENCIDOS ${PID_kill} "
 msg -bar 
