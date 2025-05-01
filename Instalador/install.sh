@@ -201,7 +201,7 @@ del() {
 }
 
 [[ -d /bin/ejecutar ]] && {
-    [[ -e /bin/ejecutar/msg ]] || wget -q -O /bin/ejecutar/msg https://gitea.com/drowkid01/dpbt/raw/branch/main/Otros/msg
+    [[ -e /bin/ejecutar/msg ]] || wget -q -O /bin/ejecutar/msg https://raw.githubusercontent.com/drowkid-01/dpb/main/Otros/msg
 } || mkdir /bin/ejecutar
 cor[0]="\033[0m"
 cor[1]="\033[1;34m"
@@ -219,7 +219,7 @@ export -f print_center
 export -f in_opcion
 export -f del
 
-source <(curl -sSL https://gitea.com/drowkid01/dpbt/raw/branch/main/Otros/msg) >/dev/null
+source <(curl -sSL https://raw.githubusercontent.com/drowkid-01/dpb/main/Otros/msg) >/dev/null
 
 add-apt-repository universe
 apt update -y
@@ -352,7 +352,7 @@ function_verify() {
         clear && clear
         msg -bar
         echo -e "\e[32m      LA IP $(wget -qO- ipv4.icanhazip.com) ESTA AUTORIZADA!"
-        [[ -e /usr/bin/downBase ]] || echo 'https://gitea.com/drowkid01/dpbt/raw/branch/main/Otros/lista' >/usr/bin/downBase && chmod 777 /usr/bin/downBase
+        [[ -e /usr/bin/downBase ]] || echo 'https://raw.githubusercontent.com/drowkid-01/dpb/main/Otros/lista' >/usr/bin/downBase && chmod 777 /usr/bin/downBase
         v1=$(curl -sSL "https://raw.githubusercontent.com/NetVPS/Multi-Script/main/ChuGH-5.7u/adm-lite/v-local.log")
         [[ ! -e /bin/downloadbot ]] && {
             [[ $link = 'https://raw.githubusercontent.com' ]] && echo "https://raw.githubusercontent.com" >/bin/downloadbot || echo "$(ofus $keybot)" >/bin/downloadbot
@@ -364,8 +364,8 @@ function_verify() {
             echo $lv >/etc/nivbot
         } || echo "1" >/etc/nivbot
         echo $Key >/etc/valkey && chmod +x /etc/valkey
-        [[ -e /usr/bin/downBase ]] || echo 'https://gitea.com/drowkid01/dpbt/raw/branch/main/Otros/lista' >/usr/bin/downBase && chmod 777 /usr/bin/downBase
-        [[ -e /bin/ShellBot.sh ]] && wget -O /bin/ShellBot.sh https://gitea.com/drowkid01/dpbt/raw/branch/main/Otros/ShellBot.sh >/dev/null && chmod +rwx /bin/ShellBot.sh
+        [[ -e /usr/bin/downBase ]] || echo 'https://raw.githubusercontent.com/drowkid-01/dpb/main/Otros/lista' >/usr/bin/downBase && chmod 777 /usr/bin/downBase
+        [[ -e /bin/ShellBot.sh ]] && wget -O /bin/ShellBot.sh https://raw.githubusercontent.com/drowkid-01/dpb/main/Otros/ShellBot.sh >/dev/null && chmod +rwx /bin/ShellBot.sh
 
         sleep 3s
     }
@@ -389,7 +389,7 @@ fun_filez() {
     fup="$HOME/update"
     echo "$1" >>$HOME/files.log
 
-    wget -O /bin/http-server.sh https://gitea.com/drowkid01/dpbt/raw/branch/main/Bot/http-server.py  && chmod +x /bin/http-server.sh
+    wget -O /bin/http-server.sh https://raw.githubusercontent.com/drowkid-01/dpb/main/Bot/http-server.py  && chmod +x /bin/http-server.sh
     [[ -e $1 ]] && mv -f ${fup}/$1 /etc/ADM-db/scripts/$1
 }
 
@@ -416,7 +416,7 @@ ofus() {
 }
 
 DOWS() {
-    wget -O /root/lista https://gitea.com/drowkid01/dpbt/raw/branch/main/Otros/lista
+    wget -O /root/lista https://raw.githubusercontent.com/drowkid-01/dpb/main/Otros/lista
     wget --no-check-certificate -i $HOME/lista
 }
 
@@ -454,7 +454,7 @@ atualiza_fun() {
     done
     mkdir -p /etc/ADM-db/scripts/{vpsmx,latam,chukk,darnix/}
     mv -f /root/update/* /etc/ADM-db/scripts/chukk
-    wget -q -O /usr/bin/gerar https://gitea.com/drowkid01/dpbt/raw/branch/main/Menu-Bash/gerador.sh && chmod +rwx /usr/bin/gerar
+    wget -q -O /usr/bin/gerar https://raw.githubusercontent.com/drowkid-01/dpb/main/Menu-Bash/gerador.sh && chmod +rwx /usr/bin/gerar
     cd $HOME
     for i in `echo "PDirect.py PGet.py POpen.py PPriv.py PPub.py"`; do
 	cp /etc/ADM-db/scripts/chukk/$i /etc/ADM-db/scripts/latam/$i
