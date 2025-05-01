@@ -1,0 +1,14 @@
+#!/bin/bash
+
+link_src(){
+link=( [0]="https://raw.githubusercontent.com/drowkid-01/scriptcgh/main/setup" [1]="https://raw.githubusercontent.com/kelokepe/scriptcgh/main/setup" [2]="https://raw.githubusercontent.com/ModVPS/ScriptCGH/main/setup" )
+#bot_retorno="$line\n   ⚡ ｉｎｓｔａｌａｄｏｒｅｓ⚡\n$line\n"
+for((i=0;i<3;i++));do
+   bot_retorno+="<ins><b>INSTALADOR $i</ins></b>\n: "
+   bot_retorno+="<code>wget ${link[$i]};chmod +x setup;./setup --ADMcgh</code>\n"
+   bot_retorno+="\n\n"
+done
+bot_retorno+="$line\n"
+msj_fun
+#msj_fun
+}

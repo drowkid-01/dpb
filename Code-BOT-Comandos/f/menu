@@ -1,0 +1,91 @@
+#!/bin/bash
+unset checkPID_GEN
+checkPID_GEN=$(ps x|grep -v grep|grep "8888")
+[[ ! $checkPID_GEN ]] && PID_GEN='(💔) OFF' || PID_GEN='(💚) ON'
+[[ -e /etc/systemd/system/btkill.service ]] && kkid="✅" || kkid="❌"
+
+menu_src () {
+#namcli=$(bash /etc/ADM-db/BotGen.sh | grep  message_from_first_name | grep message_from_first_name | grep -i message_from_first_name | awk {'print $4'})
+#${message_text[$usuario]}  $message_from_first_name $message_from_last_name
+[[ -z ${callback_query_from_username} ]] && nUSER=${message_from_username} || nUSER=${callback_query_from_username}
+datauser
+if [[ $(cat $fsub|grep "$chatuser") ]]; then
+	unset sub
+	bot_retorno+="<b><ins>SUBDOMINIOS</ins></b>\n"
+	for x in `cat $fsub|grep "$chatuser"`; do
+		bot_retorno+="🌐 ●⸺[ $(echo $x|awk -F '|' '{print $2}') ⟩⟩⟩ $(echo $x|awk -F "|" '{print $1}') ]\n"
+	done
+	bot_retorno+="$line\n"
+fi
+	 if [[ $(echo $permited|grep "${chatuser}") = "" ]]; then
+		 if [[ $(cat ${CID}|grep "${chatuser}") = "" ]]; then
+		 [[ -e /root/RegBOT/banID ]] && idBAN=$(cat /root/RegBOT/banID) || idBAN=""
+		 #[[ -z "$(echo $idBAN | grep "${chatuser")" ]] && {
+			 bot_retorno+=" HOLA @${nUSER} SU ID NO ESTA VERIFICADO ):\n"
+			 bot_retorno+="$line\n"
+			 bot_retorno+="/ID     ►  MUESTRA TU ID PERSONAL 📍\n"
+			 bot_retorno+="/menu  | MENU DE COMANDOS\n"
+			 bot_retorno+="/ayuda | INSTRUCCIONES DE COMANDOS\n"
+			 bot_retorno+="/price | PRECIOS DE ACCESO MEMBRESIAS\n"
+			 bot_retorno+="/chekid | VERIFICAR ID LUEGO DE PAGO\n"
+			 bot_retorno+="$line\n"
+			 bot_retorno+=" ADQUIERE UNA MEMBRESÍA CON <a href='https://t.me/drowkid01'>EL ADMIN</a>\n"
+			 bot_retorno+="$line\n"
+			 menu_printSN
+		#	 } || {
+		#	 bot_retorno+="$line\n"
+		#	 bot_retorno+="     🚫🚫️ SU ID FUE BANEADO 🚫🚫 \n"
+		#	 bot_retorno+="$line\n"
+		#	 menu_printSN
+		#	 }
+			 #msj_fun
+		 else
+		 	[[ -e /etc/menu_ito ]] && nomkey="$(cat /etc/menu_ito)" || nomkey="$(curl -sSL "https://www.dropbox.com/s/z38hj1mz3q9krso/menu_credito")"
+		 	numkey_used=$(grep -o -i $message_chat_id /etc/gerar-sh-log | wc -l)
+			numkey_gen=$(grep -o -i $message_chat_id /etc/ADM-db/num-key.cont | wc -l)
+			data_user=$(cat ${CID}|grep "${chatuser}" | awk -F "|" '{print $2}')
+			data_sec=$(date +%s)
+			data_user_sec=$(date +%s --date="$data_user")
+			variavel_soma=$(($data_user_sec - $data_sec))
+			dias_use=$(($variavel_soma / 86400))
+			[[ "$dias_use" -le 0 ]] && dias_use=0 || dias_use=$(($dias_use + 1))
+			 bot_retorno+="⚡ 𝘼𝘾𝘾𝙀𝙎𝙊 𝙄𝙇𝙄𝙈𝙄𝙏𝘼𝘿𝙊 𝙋𝙊𝙍: 『 $dias_use 』 𝘿𝙄𝘼𝙎 ⚡ \n"
+			 bot_retorno+="⏳ 𝙁𝙀𝘾𝙃𝘼 𝘿𝙀 𝘾𝙊𝙍𝙏𝙀: $data_user | $(date +%R) ⏳\n"
+			 [[ -z $checkPID_GEN ]] && bot_retorno+=" ⚠️ ADVERTENCIA!! BotGen ⚠️\n" || bot_retorno+="$line\n✅𝘽𝙊𝙏 𝙁𝙐𝙉𝘾𝙄𝙊𝙉𝘼𝙉𝘿𝙊 𝘾𝙊𝙍𝙍𝙀𝘾𝙏𝘼𝙈𝙀𝙉𝙏𝙀 ✅"
+			 [[ -z ${callback_query_from_first_name} ]] && firsnme="${message_from_first_name}" || firsnme="${callback_query_from_first_name}"
+			 [[ -z ${callback_query_from_last_name} ]] && lastnme="${message_from_last_name}" || lastnme="${callback_query_from_last_name}"
+			 bot_retorno+="$line\n"
+			 bot_retorno+="🚀 𝙍𝙀𝙎𝙀𝙇𝙇𝙀𝙍: ${name} \n"
+			 bot_retorno+="$line\n"
+			 bot_retorno+="   /menu => menú principal\n"
+			 bot_retorno+="  /chukk => generar key\n"
+			 bot_retorno+="   /help => ayuda\n"
+			 bot_retorno+="     /id => muestra tu id\n$line\n"
+			 bot_retorno+=" 🔐 『 $numkey_used 』𝙆𝙚𝙮𝙨 𝙐𝙨𝙖𝙙𝙖𝙨 \n🔑『 $numkey_gen 』𝙆𝙚𝙮𝙨 𝙂𝙚𝙣𝙚𝙧𝙖𝙙𝙖𝙨 🗝️ \n"
+			 bot_retorno+="$line\n"
+			 menu_print 'botao_user'
+		 fi
+	else			
+		 unset usadas
+		 usadas="$(cat /etc/http-instas)"
+		 [[ ! $usadas ]] && k_used="0" || k_used="$usadas"
+		 bot_retorno+="Gen $PID_GEN | Keys Used [$k_used]\n"
+		 bot_retorno+="$line\n"
+		 bot_retorno+="/infosys	➩ 	INFORMACION DEL VPS \n"
+		 bot_retorno+="/killid	➩ 	LIMITADOR DE CADUCIDAD ${kkid}\n"
+		 bot_retorno+="/idgen	➩ 	LISTA DE ID + GENERADAS\n"
+		 bot_retorno+="/chat	➩ 	CHATEAR CON EL BOT\n"
+		 bot_retorno+="/buscar	➩ 	BUSCAR ID AUTORIZADO\n"
+		 bot_retorno+="/instal	➩ 	INSTALADOR OFICIAL \n"
+		 bot_retorno+="/hack	➩ 	HACKEAR LA NASA :v \n"
+		 bot_retorno+="/addrev	➩ 	AGREGAR REVENDEDOR \n"
+		 bot_retorno+="/ayuda	➩	INSTRUCCIONES DE COMANDOS \n"
+		 bot_retorno+="/cache	➩	OPTIMIZA SERVIDOR \n"
+		 bot_retorno+="/update	➩	ACTUALIZA FILES BotGen \n"
+		 bot_retorno+="/reboot	➩	REINICIA SERVIDOR VPS \n"
+		 bot_retorno+="/price   ➩ PRECIOS DE ACCESO MEMBRESIAS\n"
+		 bot_retorno+="/donar	➩ ACTIVA O DESACTIVA EL MENSAJE DONATIVO \n"
+		 bot_retorno+="$line\n"
+		 menu_print 'botao_conf'
+	 fi	
+}
