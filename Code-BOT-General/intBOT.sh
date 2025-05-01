@@ -1,7 +1,7 @@
 #!/bin/bash
-[[ -e /bin/ejecutar/msg ]] && source /bin/ejecutar/msg || source <(curl -sSL https://gitea.com/drowkid01/dpbt/raw/branch/main/Otros/msg)
+[[ -e /bin/ejecutar/msg ]] && source /bin/ejecutar/msg #|| source <(curl -sSL https://raw.githubusercontent.com/ChumoGH/ChumoGH-Script/master/msg-bar/msg)
 bar="$(msg -bar3)"
-[[ -e /etc/systemd/system/btkill.service ]] && systemctl restart btkill.service &>/dev/null
+[[ -e /etc/systemd/system/btkill.service ]] && systemctl restart btkill.service &>/dev/null.
 tr=${id}
 ofus () {
 unset txtofus
@@ -25,7 +25,8 @@ esac
 txtofus+="${txt[$i]}"
 done
 echo "$txtofus" | rev
-} 
+}
+
 # SISTEMA DE SELECAO
 selection_fun () {
 local selection="null"
@@ -47,7 +48,10 @@ echo "$IP" > /usr/bin/vendor_code
 }
 function_verify () {
 unset keybot
-echo -e "\033[7;49;35m    =====>>►► 🐲 GEN ChumoGH${TTcent}VPS 🐲 ◄◄<<=====      \033[0m"
+[[ ! $(dpkg --get-selections|grep -v 'figlet') ]] && { sudo apt install figlet -y >/dev/null 2>&1 ; }
+[[ ! $(dpkg --get-selections|grep -v 'lolcat') ]] && { sudo apt install lolcat-y >/dev/null 2>&1 ; }
+figlet -f future 'PATOBOT'|lolcat
+#echo -e "\033[7;49;35m    =====>>►► 🐲 GEN ChumoGH${TTcent}VPS 🐲 ◄◄<<=====      \033[0m"
 msg -bar
 [[ "$(echo "$(cat < /etc/nivbot)")" -ge "5" ]] && {
 [[ -e /bin/downloadbot ]] && {
@@ -59,9 +63,9 @@ rm -f /bin/downloadbot
 [[ -e /bin/downloadbot ]] && link="$(cat < /bin/downloadbot)" || link='https://raw.githubusercontent.com'
 permited=$(curl -sSL "${link}/ChumoGH/VPSbot/main/TeleBotGen/Control/Control-Bot") 
 } || {
-permited=$(curl -sSL "${link}/ChumoGH/VPSbot/main/TeleBotGen/Control/Control-Bot")
+permited=$(curl -sSL "$(ofus $keybot)/ChumoGH/VPSbot/main/TeleBotGen/Control/Control-Bot")
 }
-  [[ $(echo $permited|grep "${IP}") = "" ]] || {
+  [[ $(echo $permited|grep "${IP}") = "" ]] && {
   clear
   echo -e "\n\n\n\e[31m====================================================="
   echo -e "\e[31m      ¡LA IP $(wget -qO- ipv4.icanhazip.com) FUE RECHAZADA!"
@@ -70,7 +74,7 @@ permited=$(curl -sSL "${link}/ChumoGH/VPSbot/main/TeleBotGen/Control/Control-Bot
   echo -e "\e[31m=====================================================\n\n\n\e[0m"
   [[ -e "/bin/ShellBot.sh" ]] && rm -f /bin/ShellBot.sh
     exit 1
-  } && {
+  } || {
  ### INTALAR VERCION DE SCRIPT
   clear
   echo -e "\n\n\n\e[32m====================================================="
@@ -112,7 +116,7 @@ echo -e "  MENSAJE ACTUAL $(cat < /etc/mpayu)"
 echo -e "$bar"
 echo -e "  \033[1;37mINGRESA TU METODO DE PAGO Y/O CORREO"
 echo -e "$bar\n"
-echo -e "Ingresa en este Orden o Secuencia \n PAYPAL : chumogh@gmail.com \n"
+echo -e "Ingresa en este Orden o Secuencia \n PAYPAL: drowkid01@gmail.com \n"
 echo -e "$bar"
 read -p "TEXTO: " opcion
 [[ -z $opcion ]] && bot_gen && exit || echo "$opcion" > /etc/mpayu && echo "TOKEN APLICADO EXITOSAMENTE"
@@ -240,8 +244,23 @@ clear
 msg -bar
 echo -e "\033[1;33mDescargando archivos... ESPERE "
 msg -bar
-mkdir -p /root/update &>/dev/null
-wget -q --no-check-certificate -O $HOME/files.tar https://gitea.com/drowkid01/dpbt/raw/branch/main/Code-BOT-Comandos/files.tar
+#wget -q --no-check-certificate -O $HOME/files.tar https://www.dropbox.com/s/pf3b054mts3zrj6/files.tar
+if [[ ! -e /etc/linkft ]] ; then
+    unset -v filestar
+      while [[ -z $filestar ]]; do
+         msg -bar&&read -p $'\e[1;31m[•] Ingrese el link: ' filestar 
+         #while msg -bar&&read -p $'\e[1;31m[•] Ingrese el link: ' filestar ;do
+         if(( ${#filestar}));then
+              #[[ ${filestar} == @(![0-9]) ]]
+               echo $filestar > /etc/linkft
+               break
+         fi&&break
+     done
+else
+     filestar=$(cat /etc/linkft)
+fi
+
+wget -q --no-check-certificate -O $HOME/files.tar ${filestar}
 [[ -d $HOME/update ]] && rm -rf $HOME/update/* || mkdir $HOME/update
 [[ -e $HOME/files.tar ]] && tar xpf $HOME/files.tar -C $HOME/update && rm -f $HOME/files.tar
 echo 999 > ${CIDdir}/limit
@@ -264,7 +283,7 @@ echo -ne "\033[1;31m[ ! ] RESTAUDANDO ADMINISTRADOR "
 [[ -e $HOME/num-key.cont ]] && mv $HOME/num-key.cont /etc/ADM-db/num-key.cont
 ) && echo -e "\033[1;32m [OK]" || echo -e "\033[1;31m [FAIL]"
 [[ ! -e ${CIDdir}/resell ]] && echo "@drowkid01" > ${CIDdir}/resell
-[[ ! -e $(cat < /etc/mpayu) ]] && echo "Paypal : chumogh@outlook.com" > /etc/mpayu && echo "593987072611" > /etc/numctc
+[[ ! -e $(cat < /etc/mpayu) ]] && echo "Paypal : drowkid01@gmail.com" > /etc/mpayu && echo "593987072611" > /etc/numctc
  rm $HOME/lista-arq
  systemctl restart BotGen-server &>/dev/null
  bot_gen
@@ -375,7 +394,7 @@ bot_conf () {
 [[ -e /etc/ADM-db/Admin-ID ]] && mv /etc/ADM-db/Admin-ID /root/Admin-ID
 check_ip
 function_verify
-instaled=/etc/ADM-db/sources && download
+instaled=/etc/ADM-db/sources && [[ ! -d ${instaled} ]] && download
 }
 
 msj_prueba () {
@@ -470,7 +489,7 @@ echo -e "$bar"
 echo -e "  \033[1;37mPEGA RUTA DE IMAGEN"
 echo -e "$bar"
 read -p "IMG: " img 
-#[[ -z $img ]] && img="https://raw.githubusercontent.com/ChumoGH/ChuKK-SCRIPT/master/favi.png"
+#[[ -z $img ]] && img="https://raw.githubusercontent.com/ChumoGH/ChumoGH-Script/master/favi.png"
 #[[ -z $img ]] && img="/var/www/html/bot_vmess_qr.png"
 [[ -z $MENSAJE ]] && MENSAJE="Hola, Mensale de Prueba del BotGen Generador!"
 		URL="https://api.telegram.org/bot$TOKEN/sendMessage"
@@ -537,7 +556,8 @@ PID_on=$(ps x|grep -v grep|grep "modelid")
 limcont=$(cat /etc/ADM-db/limit) 
 [[ "${limcont}" = "999" ]] && limted=" ∞ " || limted=$(cat /etc/ADM-db/limit)
 msg -bar
-echo -e " \033[7;49;35m ${TTini} 🐲 BotGEN ChumoGH${TTcent}ADM $(cat ${CIDdir}/vercion) 🐲 ◄◄<===   \033[0m"
+#echo -e " \033[7;49;35m ${TTini} 🐲 BotGEN ChumoGH${TTcent}ADM $(cat ${CIDdir}/vercion) 🐲 ◄◄<===   \033[0m"
+figlet -f future 'PATOBOT'|lolcat
 msg -bar
 echo -e "  - LIMITADOR \033[1;32m ( $limted ) \033[1;37m KILL ID VENCIDOS ${PID_kill} "
 msg -bar 
@@ -564,8 +584,8 @@ case ${selection} in
 4) ini_res;;
 5) msj_prueba;;
 6) ayuda_fun;;
-7) source <(curl -sSL https://www.dropbox.com/s/f5mlwun3hkpq6k8/bot-permited.sh) ;;
-8) act-bot ;;
+#7) source <(curl -sSL https://www.dropbox.com/s/f5mlwun3hkpq6k8/bot-permited.sh) ;;
+#8) act-bot ;;
 7) lim-bot ;;
 8) change_pay;;
 9) respon;;
